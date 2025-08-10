@@ -1,0 +1,24 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/home"></ion-back-button>
+    </ion-buttons>
+    <ion-title>{{ modoEdicion ? 'Editar Tarea' : 'Nueva Tarea' }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <ion-item>
+    <ion-label position="floating">Título</ion-label>
+    <ion-input [(ngModel)]="tarea.titulo"></ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-label position="floating">Descripción</ion-label>
+    <ion-input [(ngModel)]="tarea.descripcion"></ion-input>
+  </ion-item>
+
+  <ion-button expand="block" (click)="guardar()">
+    {{ modoEdicion ? 'Actualizar' : 'Guardar' }}
+  </ion-button>
+</ion-content>

@@ -1,0 +1,55 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>To-Do List</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <ion-item>
+    <ion-button color="primary" [routerLink]="['/tarea']">
+      <ion-icon name="add-outline" slot="start"></ion-icon>
+      Agregar
+    </ion-button>
+  </ion-item>
+
+  <ion-list>
+    <ion-item class="ion-item" *ngFor="let tarea of tareas">
+      <ion-toggle
+        class="ion-toggle"
+        aria-label="Medium toggle"
+        color="success"
+        slot="start"
+        [checked]="tarea.completada"
+        (ionChange)="cambiarEstado(tarea)"
+      >
+      </ion-toggle>
+
+      <!-- Contenido de la tarea -->
+      <ion-label class="ion-text-wrap">
+        <h2 [class.completada]="tarea.completada">{{ tarea.titulo }}</h2>
+        <p [class.completada]="tarea.completada">{{ tarea.descripcion }}</p>
+      </ion-label>
+
+      <ion-button
+        slot="end"
+        fill="clear"
+        color="primary"
+        [routerLink]="['/tarea', tarea.id]"
+      >
+        <ion-icon
+          name="pencil-outline"
+          slot="icon-only"
+          size="small"
+        ></ion-icon>
+      </ion-button>
+      <ion-button
+        slot="end"
+        fill="clear"
+        color="danger"
+        (click)="eliminarTarea(tarea.id!)"
+      >
+        <ion-icon name="trash-outline" slot="icon-only" size="small"></ion-icon>
+      </ion-button>
+    </ion-item>
+  </ion-list>
+</ion-content>
