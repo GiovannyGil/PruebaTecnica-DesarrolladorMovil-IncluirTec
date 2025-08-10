@@ -2,8 +2,9 @@ import { Component, Input, OnInit } from '@angular/core';
 import { ModalController, IonHeader, IonToolbar, IonTitle, IonContent, IonItem, IonLabel, IonInput, IonButton, IonButtons, IonBackButton } from '@ionic/angular/standalone';
 import { FormsModule } from '@angular/forms';
 import { NgIf } from '@angular/common';
-import { Tarea, TareasService } from 'src/app/services/tareas.service';
+import { TareasService } from 'src/app/services/tareas.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Tarea } from 'src/app/models/tarea.model';
 
 @Component({
   selector: 'app-tareaform',
@@ -41,12 +42,14 @@ export class TareaformComponent implements OnInit {
    * Se ejecuta al inicializar el componente
    */
   ngOnInit() {
-    // Detectar si viene en modo edición
+    // Detectar si va a agregar o editar
     const id = this.route.snapshot.paramMap.get('id');
     if (id) {
       this.modoEdicion = true;
-      this.tareasService.obtenerTareaPorId(+id).subscribe((data) => {
-        this.tarea = data;
+      this.tareasService.obtenerTareaPorId(+id).then((data: Tarea | undefined) => {
+        if (data) {
+          this.tarea = data;
+        }
       });
     }
   }
@@ -58,12 +61,12 @@ export class TareaformComponent implements OnInit {
   guardar() {
     if (this.modoEdicion) {
       // Actualizar
-      this.tareasService.actualizarTarea(this.tarea.id!, this.tarea).subscribe(() => {
+      this.tareasService.actualizarTarea(this.tarea.id!, this.tarea).then(() => {
         this.router.navigateByUrl('/home');
       });
     } else {
       // Crear
-      this.tareasService.agregarTarea(this.tarea).subscribe(() => {
+      this.tareasService.agregarTarea(this.tarea).then(() => {
         this.router.navigateByUrl('/home');
       });
     }

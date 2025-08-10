@@ -1,0 +1,103 @@
+import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
+import { LocalDbService } from './local-db.service';
+import { NetworkService } from './network.service';
+import { SyncService } from './sync.service';
+
+/**
+ * Interfaz que representa una tarea
+ * datos de la tarea
+ * da tipado a los datos de la tarea
+ */
+export interface Tarea {
+  id?: number;
+  titulo: string;
+  descripcion?: string;
+  completada: boolean;
+}
+
+@Injectable({
+  providedIn: 'root'
+})
+/**
+ * Servicio para gestionar tareas
+ * consumo de la API REST
+ * proporciona métodos para interactuar con la API de tareas
+ */
+export class TareasService {
+
+  /**
+   * URL de la API
+   * Base URL para la API de tareas
+   */
+  private apiUrl = 'http://192.168.18.127:3000/tareas'; // http://localhost:3000/tareas
+
+  /**
+   * Inicializa el servicio de tareas
+   * @param http 
+   */
+  constructor(
+    private http: HttpClient,
+    private localDb: LocalDbService,
+    private network: NetworkService,
+    private sync: SyncService
+  ) {
+    // inicializar la base de local
+    this.localDb.init();
+  }
+
+  /**
+   * Obtiene todas las tareas
+   * @returns Un observable con la lista de tareas
+   */
+  obtenerTareas(): Observable<Tarea[]> {
+    return this.http.get<Tarea[]>(this.apiUrl);
+  }
+
+  /**
+   * Obtiene una tarea por su ID
+   * @param id El ID de la tarea a obtener
+   * @returns Un observable con la tarea solicitada
+   */
+  obtenerTareaPorId(id: number): Observable<Tarea> {
+    return this.http.get<Tarea>(`${this.apiUrl}/${id}`);
+  }
+  
+  /**
+   * Agrega una nueva tarea
+   * @param tarea La tarea a agregar
+   * @returns Un observable con la tarea agregada
+   */
+  agregarTarea(tarea: Tarea): Observable<Tarea> {
+    return this.http.post<Tarea>(this.apiUrl, tarea);
+  }
+
+  /**
+   * Actualiza una tarea existente
+   * @param id El ID de la tarea a actualizar
+   * @param tarea La tarea con los nuevos datos
+   * @returns Un observable con la tarea actualizada
+   */
+  actualizarTarea(id: number, tarea: Tarea): Observable<Tarea> {
+    return this.http.patch<Tarea>(`${this.apiUrl}/${id}`, tarea);
+  }
+
+  /**
+   * Marca una tarea como terminada
+   * @param id El ID de la tarea a terminar
+   * @returns Un observable con la tarea actualizada
+   */
+  terminarTarea(id:number): Observable<Tarea> {
+    return this.http.patch<Tarea>(`${this.apiUrl}/terminar/${id}`, {});
+  }
+
+  /**
+   * Elimina una tarea por su ID
+   * @param id El ID de la tarea a eliminar
+   * @returns Un observable con la respuesta de la eliminación
+   */
+  eliminarTarea(id: number): Observable<any> {
+    return this.http.delete(`${this.apiUrl}/${id}`);
+  }
+}

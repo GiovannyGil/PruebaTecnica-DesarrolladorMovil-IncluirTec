@@ -1,5 +1,6 @@
 <ion-header>
   <ion-toolbar>
+    <!-- Botón para regresar -->
     <ion-buttons slot="start">
       <ion-back-button defaultHref="/home"></ion-back-button>
     </ion-buttons>
@@ -7,17 +8,21 @@
   </ion-toolbar>
 </ion-header>
 
+<!-- contenido -> formulario -->
 <ion-content class="ion-padding">
+  <!-- Input título -->
   <ion-item>
     <ion-label position="floating">Título</ion-label>
     <ion-input [(ngModel)]="tarea.titulo"></ion-input>
   </ion-item>
 
+  <!-- Input descripción -->
   <ion-item>
     <ion-label position="floating">Descripción</ion-label>
     <ion-input [(ngModel)]="tarea.descripcion"></ion-input>
   </ion-item>
 
+  <!-- Botón para guardar/actualizar tarea -->
   <ion-button expand="block" (click)="guardar()">
     {{ modoEdicion ? 'Actualizar' : 'Guardar' }}
   </ion-button>

@@ -5,6 +5,7 @@
 </ion-header>
 
 <ion-content class="ion-padding">
+  <!-- Botón para agregar tarea -->
   <ion-item>
     <ion-button color="primary" [routerLink]="['/tarea']">
       <ion-icon name="add-outline" slot="start"></ion-icon>
@@ -14,12 +15,14 @@
 
   <ion-list>
     <ion-item class="ion-item" *ngFor="let tarea of tareas">
+      <!-- Toggle para cambiar estado de la tarea -->
       <ion-toggle
         class="ion-toggle"
         aria-label="Medium toggle"
         color="success"
         slot="start"
         [checked]="tarea.completada"
+        [disabled]="tarea.completada"
         (ionChange)="cambiarEstado(tarea)"
       >
       </ion-toggle>
@@ -30,6 +33,7 @@
         <p [class.completada]="tarea.completada">{{ tarea.descripcion }}</p>
       </ion-label>
 
+      <!-- Botón para editar tarea -->
       <ion-button
         slot="end"
         fill="clear"
@@ -42,6 +46,8 @@
           size="small"
         ></ion-icon>
       </ion-button>
+
+      <!-- Botón para eliminar tarea -->
       <ion-button
         slot="end"
         fill="clear"

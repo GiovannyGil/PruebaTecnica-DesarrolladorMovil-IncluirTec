@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonApp, IonRouterOutlet, IonToolbar, IonFooter } from '@ionic/angular/standalone';
+import { IonApp, IonRouterOutlet, IonToolbar, IonFooter, Platform } from '@ionic/angular/standalone';
 import { HomePage } from "./home/home.page";
 
 @Component({

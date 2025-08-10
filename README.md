@@ -35,7 +35,21 @@ PATCH -> terminar tarea (cambiar "estado") : http://localhost:3000/tareas/termin
 
 DELETE -> eliminar tarea (eliminar soft delete) : http://localhost:3000/tareas/2
 
-
+iniciar servidor con ngrok : ngrok http 3000 --domain=logical-rapid-dingo.ngrok-free.app
 
 
 #MOBILE
+
+- bibliotecas/recursos
+ -- ionicons : para el uso de iconos en las vistas
+
+para ejecutar en local se usa el comando "ionic serve"
+se debe cambiar la apiUrl si se va usar el local(navegador/web) o en dispositivo
+
+
+# "EXPORTAR" APP A ANDROID STUDIO
+- ionic build
+- npx cap add android (SI YA EXISTE, ELIMINAR LA CARPETA ANDROID DEL PROYECTO)
+- npx cap copy
+- npx cap sync
+- npx cap open android -> ABRE ANDROID STUDI CON LA APP APRA EXPORTARLA
